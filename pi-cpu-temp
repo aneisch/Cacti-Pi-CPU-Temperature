@@ -1,0 +1,13 @@
+#!/bin/bash
+# a script to read and save temperature readings from pi
+#
+GET4=$(/opt/vc/bin/vcgencmd measure_temp | sed -e 's/temp=//' -e "s/'C//")
+#echo "Get4  $GET4"
+GET5=`echo 'scale=3;' $GET4\*1.8 | bc`
+#echo "GET5  $GET5"
+GET6=`echo 'scale=3;' $GET5+32 | bc`
+rrdupdate PATH/TO/TEMPERATURE.rrd N:"${GET6}"
+#echo "${GET6}"         
+exit 0
+
+
